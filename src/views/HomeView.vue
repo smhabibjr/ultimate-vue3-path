@@ -6,8 +6,20 @@
   </main>
 </template>
 
-<script>
-export default {
+<script setup>
+import { ref } from 'vue'
+
+const counter = ref(0)
+
+const increaseCounter = () => {
+  counter.value++
+}
+
+const decreaseCounter = () => {
+  counter.value--
+}
+
+/* export default {
   data() {
     return {
       counter: 90
@@ -21,5 +33,5 @@ export default {
       this.counter--
     }
   }
-}
+} */
 </script>
