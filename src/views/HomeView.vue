@@ -26,8 +26,21 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch } from 'vue'
+import { reactive, computed, watch, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted } from 'vue'
 
+
+onBeforeMount(()=> {
+  console.log("on before mount!");
+})
+onBeforeUnmount(()=> {
+  console.log("onBeforeUnmount");
+})
+onMounted(()=> {
+  console.log("onMounted");
+})
+onUnmounted(()=> {
+  console.log("onUnmounted");
+})
 const counterData = reactive({
   counter: 15,
   title: "my reactive counter",
