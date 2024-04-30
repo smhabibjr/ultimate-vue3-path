@@ -18,7 +18,7 @@
 
     <p>
       <h6>Edit title</h6>
-      <input type="text"  v-model="counterData.title">
+      <input type="text"  v-model="counterData.title" v-autofocus>
     </p>
 
   </main>
@@ -26,21 +26,10 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted } from 'vue'
+import { reactive, computed, watch } from 'vue'
+import { vAutofocus } from "@/directives/vAutofocus"
 
 
-onBeforeMount(()=> {
-  console.log("on before mount!");
-})
-onBeforeUnmount(()=> {
-  console.log("onBeforeUnmount");
-})
-onMounted(()=> {
-  console.log("onMounted");
-})
-onUnmounted(()=> {
-  console.log("onUnmounted");
-})
 const counterData = reactive({
   counter: 15,
   title: "my reactive counter",
