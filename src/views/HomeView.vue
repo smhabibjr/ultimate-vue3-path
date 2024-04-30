@@ -1,24 +1,24 @@
 <template>
   <main>
     <p>
-      <h6>{{ counterData.title }}</h6>
+      <h6>{{ counter.title }}</h6>
     </p>
    
     <p>
-      <button @click="decreaseCounter">-</button>
-      <span> {{ counterData.counter }} </span>
-      <button @click="increaseCounter">+</button>
+      <button @click="counter.decreamentCounter(unit)">-</button>
+      <span>{{ counter.count }} </span>
+      <button @click="counter.increamentCounter(unit)">+</button>
     </p>
     <p>
-      <span>The number is {{ evenOrOdd }} </span>
+      <span>The number is {{ counter.evenOrOdd }} </span>
     </p>
     <p>
-      <input type="number" v-model="counterData.userInputedNumber">
+      <input v-model="unit" type="number">
     </p>
 
     <p>
       <h6>Edit title</h6>
-      <input type="text"  v-model="counterData.title" v-autofocus>
+      <input v-model="counter.title" type="text" v-autofocus>
     </p>
 
   </main>
@@ -26,35 +26,14 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch } from 'vue'
+import { reactive, computed, watch, ref } from 'vue'
 import { vAutofocus } from "@/directives/vAutofocus"
+import { useCounterStore } from '@/stores/counter';
+const counter = useCounterStore();
+
+const unit = ref(1)
 
 
-const counterData = reactive({
-  counter: 15,
-  title: "my reactive counter",
-  userInputedNumber:0
-})
 
-watch(()=> counterData.counter, (newCounter, oldCounter)=> {
-  if(newCounter === 20) alert("i am 20")
-  console.log(`new counter value : ${newCounter}, old counter: ${oldCounter}`);
-})
 
-const evenOrOdd = computed(()=> {
-  if(counterData.counter % 2 === 0) return 'even'
-  return 'odd'
-})
-
-const increaseCounter = () => {
-  if(counterData.userInputedNumber > 0){
-    counterData.counter += counterData.userInputedNumber
-  }
-}
-
-const decreaseCounter = () => {
-  if(counterData.counter > 0){
-    counterData.counter -= counterData.userInputedNumber
-  }
-}
 </script>
