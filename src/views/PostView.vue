@@ -1,4 +1,7 @@
 <template>
+  <div>
+    
+  </div>
   <div class="post">
     <h4>Post Details</h4>
 
