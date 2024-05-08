@@ -1,8 +1,12 @@
 <template>
   <main>
-    <p>
-      <h6>{{ counter.title }}</h6>
-    </p>
+
+    <h6 ref="appTitleRef">{{ counter.title }}</h6>
+    <div>
+      <h2>
+
+      </h2>
+    </div>
    
     <p>
       <button @click="counter.decreamentCounter(unit)">-</button>
@@ -26,12 +30,24 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch, ref } from 'vue'
-import { vAutofocus } from "@/directives/vAutofocus"
+import { vAutofocus } from "@/directives/vAutofocus";
 import { useCounterStore } from '@/stores/counter';
+import { nextTick, onMounted, ref } from 'vue';
 const counter = useCounterStore();
 
 const unit = ref(1)
+
+const appTitleRef = ref(null)
+
+onMounted(()=> {
+  console.log(`The app title width ${appTitleRef.value.offsetWidth} px`);
+})
+
+// nextTrick allowed us to do someting when DOM has updated
+
+nextTick(()=> {
+  console.log("DOM has been updated!");
+})
 
 
 

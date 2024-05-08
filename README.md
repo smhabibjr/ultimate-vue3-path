@@ -1,45 +1,50 @@
-# vue route
+# Lists, Teleport, Template Refs and nextTick
 
-### Define route in src/router/index.js
-
-```js
-    {
-      path: '/posts',
-      name: 'posts',
-      component: () => import('../views/PostsView.vue')
-    },
-    {
-      path: '/post/:id/:email',
-      name: 'post',
-      component: () => import('../views/PostView.vue')
-    }
-```
-
-### Setup router-link
+### Lists (v-for)
 
 ```js
-<h4>Posts</h4>
+//in template
 <ul>
-    <li>
-    <RouterLink :to="{name:'post', params: { id: 3, email: 'myemail.com'} }">Post 3</RouterLink>
-    </li>
-    <li>
-    <RouterLink to="/post/4/email.com">Post 4</RouterLink>
-    </li>
+  <li v-for="(post, index) in posts" :key="index">
+    <RouterLink :to="`/post/${post.id}`">Post {{ post.id }}</RouterLink>
+  </li>
 </ul>
+
+// in script
+const posts = ref([
+  {
+    id: 1,
+    title: 'Post 1'
+  },
+  {
+    id: 2,
+    title: 'Post 2'
+  }
+])
 ```
 
-### Access params in template (vuejs 2 and vuejs 3)
+### Template Refs
 
 ```js
-   <p>
-      this is our post with id {{ $route.params.id }}
-    </p>
-    <p>
-      <pre>
-        {{ $route.params }}
-      </pre>
-    </p>
+<h6 ref="appTitleRef">{{ counter.title }}</h6>
+
+const appTitleRef = ref(null)
+
+onMounted(()=> {
+  console.log(`The app title width ${appTitleRef.value.offsetWidth} px`);
+})
+```
+
+### NextTick
+
+```js
+import { ref, onMounted, nextTick } from 'vue' // Don't forget to import nextTick
+
+// nextTrick allowed us to do someting when DOM has updated
+
+nextTick(()=> {
+  console.log("DOM has been updated! Do something...");
+})
 ```
 
 ### Access params in <script setup> ( vuejs 3)

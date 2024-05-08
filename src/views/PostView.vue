@@ -39,9 +39,6 @@ const goToHome = ()=> {
     }
   })
 }
-
-console.log(route.params.id);
-console.log(route.params.email);
 </script>
 
 <style></style>
