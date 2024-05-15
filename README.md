@@ -46,28 +46,10 @@ nextTick(()=> {
   console.log("DOM has been updated! Do something...");
 })
 ```
+### Teleport (new feature from vue 3)
 
-### Access params in <script setup> ( vuejs 3)
+allows developers to move a component's content to a different location in the DOM tree. It provides a declarative way to render a component's template at a specified target, outside of the component's original DOM hierarchy.
 
-```js
-import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute()
 
-console.log(route.params.id)
-console.log(route.params.email)
 
-// use router to push route
-
-const router = useRouter()
-
-const goToHome = () => {
-  router.push({
-    name: 'home',
-    params: {
-      id: 3,
-      email: 'email@gmail.com'
-    }
-  })
-}
-```
