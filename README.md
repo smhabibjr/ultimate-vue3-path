@@ -42,14 +42,25 @@ import { ref, onMounted, nextTick } from 'vue' // Don't forget to import nextTic
 
 // nextTrick allowed us to do someting when DOM has updated
 
-nextTick(()=> {
-  console.log("DOM has been updated! Do something...");
+nextTick(() => {
+  console.log('DOM has been updated! Do something...')
 })
 ```
+
 ### Teleport (new feature from vue 3)
 
 allows developers to move a component's content to a different location in the DOM tree. It provides a declarative way to render a component's template at a specified target, outside of the component's original DOM hierarchy.
 
-
-
-
+```js
+<Teleport to="body">
+  <div v-if="showModal" class="modal">
+    <h4>This is our modal!</h4>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga nam rerum, quam excepturi
+      amet quas cum odio aperiam? Laboriosam quasi deserunt delectus praesentium unde est
+      temporibus repellendus eum nesciunt magni.
+    </p>
+    <button @click="showModal = false">Hide modal</button>
+  </div>
+</Teleport>
+```
