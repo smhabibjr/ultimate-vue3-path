@@ -1,66 +1,91 @@
-# Lists, Teleport, Template Refs and nextTick
+# Child components, props and emits
 
-### Lists (v-for)
+### Child component
 
 ```js
-//in template
-<ul>
-  <li v-for="(post, index) in posts" :key="index">
-    <RouterLink :to="`/post/${post.id}`">Post {{ post.id }}</RouterLink>
-  </li>
-</ul>
+//Define a child component in /components folder
+<template>
+  <h1>Here is a child component!</h1>
+  <ButtonCounter />
+</template>
 
-// in script
-const posts = ref([
-  {
-    id: 1,
-    title: 'Post 1'
-  },
-  {
-    id: 2,
-    title: 'Post 2'
+// Using in another component
+<script setup>
+import ButtonCounter from './ButtonCounter.vue'
+</script>
+
+```
+
+### Slot
+
+```js
+// slot placeholder in child component
+<div class="modal">
+  <slot></slot>
+  <button>Hide modal</button>
+</div>
+
+// pass element to slot. You can more then one element at a same time.
+<Modal>
+  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+  <button>Test Button</button>
+</Modal>
+
+
+//Named slot
+// Define a named slot in child component
+<div class="modal">
+  <h4> <slot name="title"></slot> </h4>
+  <slot></slot>
+  <button>Hide modal</button>
+</div>
+
+// Pass element to name slot
+<Modal>
+  <template v-slot:title>This is our updated title!</template>
+  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+  <button>Test Button</button>
+</Modal>
+```
+
+### Props in composition api
+
+```js
+// pass props from parent to child component
+
+<Modal title="Title via props">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+  <button>Close Button</button>
+</Modal>
+
+// Receive props in child component using composition API
+<script setup>
+defineProps({
+  title: {
+    type: String,
+    default: 'No Title specified!'
   }
-])
-```
-
-### Template Refs
-
-```js
-<h6 ref="appTitleRef">{{ counter.title }}</h6>
-
-const appTitleRef = ref(null)
-
-onMounted(()=> {
-  console.log(`The app title width ${appTitleRef.value.offsetWidth} px`);
 })
+</script>
+
 ```
 
-### NextTick
+### Emitting and Listening to Events from child to parent
 
 ```js
-import { ref, onMounted, nextTick } from 'vue' // Don't forget to import nextTick
+// Define emit in child component
+// in setup
+defineEmits(['closeModal'])
 
-// nextTrick allowed us to do someting when DOM has updated
+<button @click="$emit('closeModal')">Hide modal</button>
 
-nextTick(() => {
-  console.log('DOM has been updated! Do something...')
-})
+// Listening emit event in parent component
+<Modal v-if="showModal" @closeModal="showModal = false">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+</Modal>
 ```
 
-### Teleport (new feature from vue 3)
+### How provide and inject Work
 
-allows developers to move a component's content to a different location in the DOM tree. It provides a declarative way to render a component's template at a specified target, outside of the component's original DOM hierarchy.
+In Vue 3, the provide and inject APIs facilitate dependency injection, allowing components to share data without prop drilling (passing props through every intermediate component)
 
-```js
-<Teleport to="body">
-  <div v-if="showModal" class="modal">
-    <h4>This is our modal!</h4>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga nam rerum, quam excepturi
-      amet quas cum odio aperiam? Laboriosam quasi deserunt delectus praesentium unde est
-      temporibus repellendus eum nesciunt magni.
-    </p>
-    <button @click="showModal = false">Hide modal</button>
-  </div>
-</Teleport>
-```
