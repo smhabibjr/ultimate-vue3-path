@@ -4,7 +4,7 @@
     <h6 ref="appTitleRef">{{ counter.title }}</h6>
     <div>
       <h2>
-
+        Mouse position is at: {{ x }}, {{ y }}
       </h2>
     </div>
    
@@ -34,6 +34,8 @@ import { vAutofocus } from "@/directives/vAutofocus";
 import { useCounterStore } from '@/stores/counter';
 import { nextTick, onMounted, ref } from 'vue';
 const counter = useCounterStore();
+import { useMouse } from "@/use/useMouse";
+const { x , y } = useMouse()
 
 const unit = ref(1)
 
